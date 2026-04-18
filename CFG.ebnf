@@ -1,0 +1,37 @@
+Program ? "reign" Identifier "{" StatementList "}"
+
+StatementList ? Statement*
+
+Statement ? Declaration
+| IfStatement
+| WhileStatement
+| Block
+| ExpressionStatement
+
+Declaration ? Type Identifier "=" Expression ";"
+
+Type ? "stone" | "water" | "papyrus"
+
+IfStatement ? "judge" "(" Expression ")" Block ("banish" Block)?
+
+WhileStatement ? "flow" "(" Expression ")" Block
+
+Block ? "{" StatementList "}"
+
+ExpressionStatement ? Expression ";"
+
+Expression ? Equality
+
+Equality ? Comparison (( "==" | "!=" ) Comparison)*
+
+Comparison ? Term (( ">" | ">=" | "<" | "<=" ) Term)*
+
+Term ? Factor (( "+" | "-" ) Factor)*
+
+Factor ? Unary
+
+Unary ? ( "!" | "-" ) Unary | Primary
+
+Primary ? Number
+| Identifier
+| "(" Expression ")"

@@ -1,27 +1,30 @@
-﻿using System;
 using NileLangCompiler;
 
 class Program
 {
     static void Main()
     {
-        // A snippet of NileLang code based on your Underworld example
         string sourceCode = @"
-            // The Pharaoh commanded this variable
-            reign goodDeeds = 10;
-            
-            @
+            reign myProgram {
+                stone x = 5;
+                stone y = 10;
+                x + y;
+            }
         ";
 
-        Console.WriteLine("Scanning NileLang Source Code...\n");
+        Console.WriteLine("=== SCANNING ===");
 
-        Scanner scanner = new Scanner();
+        var scanner = new Scanner();
         var tokens = scanner.Scan(sourceCode);
 
-        // Print out every token the scanner found
         foreach (var token in tokens)
-        {
-            Console.WriteLine(token.ToString());
-        }
+            Console.WriteLine(token);
+
+        Console.WriteLine("\n=== PARSING (AST) ===");
+
+        var parser = new Parser(tokens);
+        ProgramAst ast = parser.ParseProgram();
+
+        ASTPrinter.Print(ast);
     }
 }
